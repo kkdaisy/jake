@@ -22,7 +22,7 @@ pipeline {
                     def dockerImage = docker.build -t ("luckyjakey/nginx:v1", "--file Dockerfile .")
 
                     // Docker Hub에 로그인
-                    docker.withRegistry('https://index.docker.io/v1/', 'docker') {
+                    docker.withRegistry('https://index.docker.io/v1/', 'dckr_pat_Lt0bzfliwYJj6FnY-2-goug2e9E') {
                         // Docker 이미지 푸시
                         dockerImage.push()
                     }
