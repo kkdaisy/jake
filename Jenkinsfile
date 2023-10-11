@@ -30,7 +30,7 @@ pipeline {
             }
         }
 
-        stage('Deploy to AKS') {
+        stage('Deploy to NKS') {
             steps {
                 script {
                     // Kubernetes 클러스터에 연결
