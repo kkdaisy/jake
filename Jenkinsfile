@@ -3,7 +3,7 @@ pipeline {
 
     environment {
         DOCKERHUB_CREDENTIALS = credentials('docker') // Jenkins에 등록한 Docker Hub 자격 증명
-        IMAGE_NAME = "kkmee0209/nginxtest" // Docker Hub 이미지 이름
+        IMAGE_NAME = "luckyjakey/nginx" // Docker Hub 이미지 이름
         TAG = "latest" // 이미지 태그 (원하는 태그로 변경)
     }
 
