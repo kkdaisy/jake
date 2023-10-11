@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment {
-        DOCKERHUB_CREDENTIALS = credentials('docker') // Jenkins에 등록한 Docker Hub 자격 증명
+        DOCKERHUB_CREDENTIALS = credentials('dockersecret') // Jenkins에 등록한 Docker Hub 자격 증명
         IMAGE_NAME = "luckyjakey/nginx" // Docker Hub 이미지 이름
         TAG = "latest" // 이미지 태그 (원하는 태그로 변경)
     }
@@ -22,7 +22,7 @@ pipeline {
                     def dockerImage = docker.build -t ("luckyjakey/nginx:v1", "--file Dockerfile .")
 
                     // Docker Hub에 로그인
-                    docker.withRegistry('https://index.docker.io/v2/', 'docker') {
+                    docker.withRegistry('https://index.docker.io/v1/', 'dockersecret') {
                         // Docker 이미지 푸시
                         dockerImage.push()
                     }
