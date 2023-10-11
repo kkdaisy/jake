@@ -43,7 +43,7 @@ pipeline {
                     // Kubernetes 클러스터에 연결
                     withKubeConfig(credentialsId: 'nks-pipeline', doNotReplace: true) {
                         // Kubernetes 클러스터에 배포
-                        sh "kubectl set image deployment/nginx-deployment nginx=${IMAGE_NAME}:${LATEST_TAG}"                        
+                        //sh "kubectl set image deployment/nginx-deployment nginx=${IMAGE_NAME}:${LATEST_TAG}"                        
                         // Kubernetes 클러스터에 배포 (Build 태그)
                         //sh "kubectl set image deployment/nginx-deployment nginx=${IMAGE_NAME}:${BUILD_TAG}"
                         sh "kubectl rollout restart deployment/nginx-deployment"
