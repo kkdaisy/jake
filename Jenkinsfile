@@ -19,10 +19,10 @@ pipeline {
             steps {
                 script {
                     // Docker 이미지 빌드
-                    def dockerImage = docker.build -t ("luckyjakey/nginx:v1", "--file Dockerfile .")
+                    def dockerImage = docker.build -t ("${IMAGE_NAME}:${TAG}", "--file Dockerfile .")
 
                     // Docker Hub에 로그인
-                    docker.withRegistry('https://index.docker.io/v1/', 'dckr_pat_Lt0bzfliwYJj6FnY-2-goug2e9E') {
+                    docker.withRegistry('https://index.docker.io/v1/', 'docker') {
                         // Docker 이미지 푸시
                         dockerImage.push()
                     }
