@@ -29,5 +29,17 @@ pipeline {
                 }
             }
         }
+
+        stage('Deploy to AKS') {
+            steps {
+                script {
+                    // Kubernetes 클러스터에 연결
+                    withKubeConfig(credentialsId: 'kube-config', doNotReplace: true) {
+                        // Kubernetes 클러스터에 배포
+                        sh "kubectl set image deployment/nginx-deployment nginx=${IMAGE_NAME}:${TAG}"
+                    }
+                }
+            }
+        }
     }
 }
