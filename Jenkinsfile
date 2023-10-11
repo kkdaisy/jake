@@ -4,7 +4,7 @@ pipeline {
     environment {
         DOCKERHUB_CREDENTIALS = credentials('docker') // Jenkins에 등록한 Docker Hub 자격 증명
         IMAGE_NAME = "luckyjakey/nginx" // Docker Hub 이미지 이름
-        TAG = "latest" // 이미지 태그 (원하는 태그로 변경)
+        LATEST_TAG = "latest" // 이미지 태그 (원하는 태그로 변경)
         BUILD_TAG = "${BUILD_NUMBER}" // 빌드 번호를 태그로 사용
         KUBE_CONFIG = credentials('nks-pipeline') // Kubernetes 클러스터 구성 파일 (Kubeconfig) 자격 증명
     }
