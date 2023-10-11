@@ -19,7 +19,7 @@ pipeline {
             steps {
                 script {
                     // Docker 이미지 빌드
-                    def dockerImage = docker.build("${IMAGE_NAME}:${TAG}", "--file Dockerfile .")
+                    def dockerImage = docker.build("${nginx}:${v1}", "--file Dockerfile .")
 
                     // Docker Hub에 로그인
                     docker.withRegistry('https://index.docker.io/v1/', 'docker-hub-credentials') {
