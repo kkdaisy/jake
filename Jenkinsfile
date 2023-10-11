@@ -21,7 +21,7 @@ pipeline {
             steps {
                 script {
                     // Docker 이미지 빌드
-                    def dockerImage = docker.build("${IMAGE_NAME}:${TAG}", "--file Dockerfile .")
+                    def latestImage = docker.build("${IMAGE_NAME}:${LATEST_TAG}", "--file Dockerfile .")
 
                     // Docker 이미지 빌드 (빌드 번호 태그)
                     def buildImage = docker.build("${IMAGE_NAME}:${BUILD_TAG}", "--file Dockerfile .")
