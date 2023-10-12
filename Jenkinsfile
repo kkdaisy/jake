@@ -22,17 +22,14 @@ pipeline {
                 script {
                     // Docker 이미지 빌드
                     def latestImage = docker.build("${IMAGE_NAME}:${LATEST_TAG}", "--file Dockerfile .")
-
-                    // Docker 이미지 빌드 (빌드 번호 태그)
                     def buildImage = docker.build("${IMAGE_NAME}:${BUILD_TAG}", "--file Dockerfile .")
 
-                    // Docker Hub에 로그인
-                    docker.withRegistry('https://index.docker.io/v1/', 'docker') {
-                       // Docker 이미지 푸시 (latest 태그)
-                        latestImage.push()
-                        // Docker 이미지 푸시 (빌드 번호 태그)
-                        buildImage.push()
-                    }
+                    // Docker 이미지를 .tar 파일로 저장
+                    sh "docker save -o latest_image.tar ${IMAGE_NAME}:${LATEST_TAG}"
+                    sh "docker save -o build_image.tar ${IMAGE_NAME}:${BUILD_TAG}"
+
+                    // 아티팩트로 Docker 이미지 저장
+                    archiveArtifacts artifacts: 'latest_image.tar,build_image.tar', fingerprint: true
                 }
             }
         }
@@ -43,13 +40,9 @@ pipeline {
                     // Kubernetes 클러스터에 연결
                     withKubeConfig(credentialsId: 'nks-pipeline', doNotReplace: true) {
                         // Kubernetes 클러스터에 배포
-                        //sh "kubectl set image deployment/nginx-deployment nginx=${IMAGE_NAME}:${LATEST_TAG}"                        
-                        // Kubernetes 클러스터에 배포 (Build 태그)
-                        //sh "kubectl set image deployment/nginx-deployment nginx=${IMAGE_NAME}:${BUILD_TAG}"
                         sh "kubectl rollout restart deployment/nginx-deployment"
                     }
                 }
             }
         }
     }
-}
