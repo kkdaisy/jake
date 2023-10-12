@@ -33,6 +33,8 @@ pipeline {
                         // Docker 이미지 푸시 (빌드 번호 태그)
                         buildImage.push()
                     }
+
+                    archiveArtifacts artifacts: '*.tar', fingerprint: true
                 }
             }
         }
