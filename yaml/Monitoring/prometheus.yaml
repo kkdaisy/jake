@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: prometheus-deployment
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: prometheus
+  template:
+    metadata:
+      labels:
+        app: prometheus
+    spec:
+      containers:
+        - name: prometheus
+          image: prom/prometheus:v2.30.3
+          ports:
+            - containerPort: 9090
+          volumeMounts:
+            - name: pvc-dynamic
+              mountPath: "/prometheus"
+      volumes:
+        - name: pvc-dynamic
+          persistentVolumeClaim:
+            claimName: pvc-dynamic
+
