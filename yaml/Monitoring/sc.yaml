@@ -3,4 +3,4 @@ kind: StorageClass
 metadata: 
   name: sc
 provisioner: cinder.csi.openstack.org 
-volumeBindingMode: WaitForFirstConsumer
+volumeBindingMode: Immediate
