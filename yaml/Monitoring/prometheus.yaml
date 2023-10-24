@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: prometheus
+  name: prometheus-deployment
 spec:
   replicas: 1
   selector:
@@ -16,20 +16,18 @@ spec:
         - name: prometheus
           image: prom/prometheus:v2.30.3
           args:
-            - --config.file=/etc/prometheus/prometheus.yaml
-            - --storage.tsdb.path=/prometheus
+            - "--config.file=/etc/prometheus/prometheus.yml"
           ports:
             - containerPort: 9090
           volumeMounts:
-            - name: config
-              mountPath: /etc/prometheus
             - name: pvc-dynamic
-              mountPath: /prometheus
+              mountPath: /mnt/user/appdata/prometheus/data
+            - name: config-volume
+              mountPath: /etc/prometheus
       volumes:
-                - name: config
-          configMap:
-            name: prometheus-config
         - name: pvc-dynamic
           persistentVolumeClaim:
             claimName: pvc-dynamic
-
+        - name: config-volume
+          configMap:
+            name: prometheus-config # 앞서 정의한 ConfigMap 이름을 지정합니다.

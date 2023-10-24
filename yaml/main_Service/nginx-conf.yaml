@@ -1,0 +1,23 @@
+# /etc/nginx/conf.d/nginx.conf
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: prometheus-server-conf
+  labels:
+    name: prometheus-server-conf
+  namespace: monitoring
+data:
+  prometheus.yml: |-
+    server {
+        listen <nginx 호스트 IP>;
+        server_name status.localhost;
+        keepalive_timeout 0;
+
+        access_log off;
+
+        allow all;
+
+        location /metrics {
+            stub_status on;
+        }
+    }
